@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+    </head>
+    <body>
+        <canvas class="zdog-canvas" width="1000" height="600"></canvas>
+    </body>
+</html>
+<script>
+    // zdog-demo.js
+    let isSpinning = true;
+    // create illo
+    let illo = new Zdog.Illustration({
+        // set canvas with selector
+        element: '.zdog-canvas',
+        dragRotate : true, //habilita rotación
+        //stop rotation when dragging
+        onDragStart : function(){
+            isSpinning = false;
+        }
+        
+    });
+
+    let can = new Zdog.Cylinder({
+        addTo: illo,
+        diameter: 80,
+        length: 150,
+        stroke: false,
+        color: '#7accff',
+        backface: '#636',
+        rotate : {x:1.5},
+        translate: {  x:-300 },
+    });
+    let base = new Zdog.Cone({
+        addTo: can,
+        diameter: 200,
+        length: 200,
+        stroke: false,
+        color: '#7accff',
+        backface: '#636',
+        translate: {  z:-150 },
+    });
+
+    let boca = new Zdog.Cylinder({
+        addTo: can,
+        diameter : 100,
+        length : 30,
+        stroke:false,
+        color: '#7accff',
+        backface: '#636',
+        translate: {  z:75 }
+    });
+
+    let semicircle = new Zdog.Ellipse({
+        addTo: illo,
+        diameter: 80,
+        quarters: 2,
+        stroke: 20,
+        color: '#C25',
+        rotate:{y:3},
+        translate: {  x:-100 },
+    });
+    let ilatina = new Zdog.Shape({
+        addTo:semicircle,
+        stroke:20,
+        color: '#C25',
+        path:[
+            {y:-20},
+            {y:40},
+
+        ],
+        translate: {x:-50},
+    });
+    let puntito = new Zdog.Shape({
+        addTo:ilatina,
+        stroke:20,
+        color: '#C25',
+        path:[
+            {y:-30},
+            {y:-35},
+
+        ],
+        translate: {y:-20},
+    });
+
+    let ultimaletra = new Zdog.Shape({
+        addTo:ilatina,
+        stroke:20,
+        color: '#C25',
+        closed:false,
+        path:[
+            {x:0, y:40},
+            {x:0, y:-40},
+            {x:-40, y:25},
+            {x:-80, y:-40},
+            {x:-80, y:40},
+
+        ],
+        translate: {x:-50},
+    })
+
+    // update & render
+    function animate(){
+        
+     
+        illo.updateRenderGraph();
+        requestAnimationFrame(animate)
+    }
+    animate();
+    
+</script>
